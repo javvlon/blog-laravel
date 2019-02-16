@@ -11,6 +11,25 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['domain' => '{account}.blog-laravel.test'], function () {
+    Route::get('/', function ($account) {
+        return $account;
+    });
+    Route::get('users/{id}', function ($account, $id) {
+
+    });
+});
+
+Route::get('/', 'TasksController@home');
+
+Route::get('about', function () {
+    return 's';
+});
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('dashboard', function () {
+    return view('dashboard'); });
+    Route::get('account', function () { return view('account');
+    });
 });
