@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Task;
 
 class User extends Authenticatable
 {
@@ -29,12 +30,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Set and encrypt the password attribute.
+     * The relationship to the user's tasks.
      *
-     * @param $value
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function setPasswordAttribute($value)
+    public function tasks()
     {
-        $this->attributes['password'] = bcrypt($value);
+        return $this->hasMany(Task::class);
     }
 }

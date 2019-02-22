@@ -10,29 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::group(['domain' => '{account}.blog-laravel.test'], function () {
-    Route::get('/', function ($account) {
-        return $account;
-    });
-    Route::get('users/{id}', function ($account, $id) {
-
-    });
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/', 'TasksController@home');
-
-Route::get('about', function () {
-    return 's';
-});
-
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('dashboard', function () {
-    return view('dashboard'); });
-    Route::get('account', function () { return view('account');
-    });
-});
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function() {
+    Route::resource('tasks', 'TaskController', [
+        'only' => [
+            'index', 'store', 'update'
+        ]
+    ]);
+
+});
